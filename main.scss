@@ -1,0 +1,19 @@
+:root {
+  --letter-color: 'rgb(221,21,54)'
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  width: 100vw;
+  height: 100vh;
+}
+.pad{
+  color: #fff;
+  text-shadow: 0px 0px 3px #2c2c2c;
+  width: 100px;
+  height: 100px;
+}
