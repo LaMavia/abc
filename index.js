@@ -1,8 +1,13 @@
-console.log('Hi ;)');
+console.log('https://www.youtube.com/watch?v=Cvt98tMVbHk');
 var rand = function (max, min) {
     if (min === void 0) { min = 0; }
     return Math.floor(Math.random() * (max - min) + min);
 };
+var rgb = function () {
+    var color = "rgb(" + rand(255, 50) + "," + rand(255, 50) + "," + rand(255, 50) + ")";
+    document.body.style.setProperty('--rgb', color);
+};
+setInterval(rgb, 2000);
 var defColor = '#ffffff', wrColor = '#ff0000', corColor = '#00ff50';
 var letters = 'a ą b c ć d e ę f g h i j k l ł m n ń o ó p r s ś t u w y z ź ż'.split(" ");
 var rLetter = 'c';

@@ -1,7 +1,12 @@
-console.log('Hi ;)')
+console.log('https://www.youtube.com/watch?v=Cvt98tMVbHk')
 const rand = (max: number, min: number = 0): number => {
   return Math.floor(Math.random() * (max - min) + min)
 }
+const rgb = () => {
+  const color = `rgb(${rand(255,50)},${rand(255,50)},${rand(255,50)})`
+  document.body.style.setProperty('--rgb', color)
+}
+setInterval(rgb,2000)
 const defColor = '#ffffff',
   wrColor = '#ff0000',
   corColor = '#00ff50'
