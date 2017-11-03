@@ -2,6 +2,7 @@
   --letter-color: 'rgb(221,21,54)';
   --answer-color: '#00ffff';
   --rgb: 'rgb(35,43,123)';
+  --pads-amount: 3;
 }
 
 * {
@@ -58,13 +59,14 @@ body {
   height: 100vh;
   margin: 0 auto;
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
+  flex-flow: row wrap;
+  justify-content: space-around;
   overflow: hidden;
   perspective: 90vw;
   transform-style: preserve-3d;
   .pad {
-    --s: calc(var(--w) / 100 * 30);
+    --base-inRow: 3;
+    --s: calc(var(--w) / 100 * 25 / (var(--pads-amount) / var(--base-inRow)));
     backface-visibility: visible;
     color: var(--rgb);
     text-shadow: 0px 0px 1px #2c2c2c;
@@ -85,13 +87,21 @@ body {
     }
     &:disabled {
       background-color: #2c2c2c;
-      animation: throwAway 1s 0s ease-out;
-      transform: translateY(-60vh) rotateX(180deg);
+      animation: throwAway .7s 0s ease-out;
+      transform: translateY(-100vh) rotateX(180deg);
       &:hover {
         color: #4f4f4f;
       }
     }
   }
+}
+.uwagi{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999999;
+  color: rgba(21,21,21,0.6);
+  font-size: 2vh;
 }
 
 @keyframes throwAway {
@@ -99,7 +109,7 @@ body {
     transform: translateY(0) rotateX(0)
   }
   to {
-    transform: translateY(-60vh) rotateX(180deg)
+    transform: translateY(-100vh) rotateX(180deg)
   }
 }
 
