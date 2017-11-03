@@ -7,16 +7,18 @@ var rgb = function () {
     var color = "rgb(" + rand(255, 50) + "," + rand(255, 50) + "," + rand(255, 50) + ")";
     document.body.style.setProperty('--rgb', color);
 };
+rgb();
 setInterval(rgb, 2000);
 var defColor = '#ffffff', wrColor = '#ff0000', corColor = '#00ff50';
 var letters = 'a ą b c ć d e ę f g h i j k l ł m n ń o ó p r s ś t u w y z ź ż'.split(" ");
 var rLetter = 'c';
 var randLetters = [];
 var handleClick = function (e) {
+    this;
     if (this.innerHTML === rLetter)
         console.log('proper'), reset();
     else
-        console.log('wrong');
+        this.disabled = true;
 };
 var pads = document.querySelectorAll('.pad');
 pads.forEach(function (pad) { return pad.addEventListener('click', handleClick); });
@@ -37,6 +39,7 @@ var reset = function () {
     }
     pads.forEach(function (p, i) {
         p.innerHTML = randLetters[i];
+        p.disabled = false;
     });
     rLetter = randLetters[rand(3)];
     var speech = new SpeechSynthesisUtterance(rLetter);

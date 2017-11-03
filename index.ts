@@ -6,6 +6,7 @@ const rgb = () => {
   const color = `rgb(${rand(255,50)},${rand(255,50)},${rand(255,50)})`
   document.body.style.setProperty('--rgb', color)
 }
+rgb()
 setInterval(rgb,2000)
 const defColor = '#ffffff',
   wrColor = '#ff0000',
@@ -15,8 +16,9 @@ let letters = 'a ą b c ć d e ę f g h i j k l ł m n ń o ó p r s ś t u w y 
 let rLetter = 'c'
 let randLetters = []
 const handleClick = function(e: any): void {
+  (this as HTMLElement)
   if (this.innerHTML === rLetter) console.log('proper'), reset()
-  else console.log('wrong')
+  else this.disabled = true
 }
 
 const pads = document.querySelectorAll('.pad') as any
@@ -39,6 +41,7 @@ const reset = (): void => {
   }
   pads.forEach((p, i) => {
     p.innerHTML = randLetters[i]
+    p.disabled = false
   })
   rLetter = randLetters[rand(3)]
   const speech = new SpeechSynthesisUtterance(rLetter)
