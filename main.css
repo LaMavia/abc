@@ -16,7 +16,7 @@ body {
   overflow: hidden;
 }
 
-.welcome {
+.menu {
   position: fixed;
   top: 0;
   left: 50%;
@@ -31,10 +31,27 @@ body {
   align-content: center;
 }
 
-.welcome__letter {
-  width: 20vh;
+.menu .welcome {
+  display: block;
+  width: 50%;
   height: 20vh;
+  margin: 10vh auto;
+  color: var(--rgb);
   border: 2px solid #2c2c2c;
+  transition: color 2s 0s linear;
+  font-size: calc(20vh / 1.3);
+  letter-spacing: 2vh;
+}
+
+.menu .start {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 5vh;
+  border: none;
+  border-radius: 8px;
 }
 
 .game {
