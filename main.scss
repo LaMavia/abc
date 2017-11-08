@@ -1,3 +1,27 @@
+@function pixelize($matrix, $size: 10px, $color: hotpink) {
+  $l: length($matrix); // length of the entire
+  $shadows: ''; // shadows list section
+  $i: $l; // length of the line on a matrix
+  // read through the all the rows of the list
+  @for $i from 1 through $l {
+    $row: nth($matrix, $i); // this is a single row
+    @for $j from 1 through length($row) {
+      $item: nth($row, $j); //itemize each element in that row
+      // if that item is an x, give it a drop shadow square w/background color (this is where we're building the shadows list)
+      @if $item==x {
+        $shadows: $shadows + ($j*$size) + ' ' + ($i*$size) + ' ' + $color;
+      }
+      @else {
+        $shadows: $shadows + ($j*$size) + ' ' + ($i*$size) + ' ' + transparent;
+      } // when you get to the end of the row, add a comma before the next block of drpo shadows
+      @if not ($j==length($row) and $i==$l) {
+        $shadows: $shadows + ',';
+      }
+    }
+  } // return the entire shadow list here
+  @return unquote($shadows);
+}
+
 :root {
   --letter-color: 'rgb(221,21,54)';
   --answer-color: '#00ffff';
@@ -15,6 +39,31 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background: url('./bg.png') center center no-repeat fixed;
+  background-size: cover;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 99999;
+}
+
+.read {
+  --h: 5vw;
+  position: fixed;
+  top: 2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--h) * 3);
+  height: var(--h);
+  font-size: calc(var(--h) / 3);
+  font-weight: 600;
+  line-height: var(--h);
+  border: none;
+  border-radius: 8px 0 8px 0;
+  box-shadow: 0 8px 5px -5px #2c2c2c;
 }
 
 .menu {
@@ -24,7 +73,7 @@ body {
   z-index: 50000;
   display: flex;
   flex-flow: row;
-  width: 70vw;
+  width: 100vw;
   height: 100vh;
   transform: translateX(-50%);
   border: 2px dashed #2c2c2c;
@@ -46,8 +95,8 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 30%;
-    height: 5vh;
+    width: 40%;
+    height: 8vh;
     border: none;
     border-radius: 8px;
   }
@@ -62,11 +111,13 @@ body {
   flex-flow: row wrap;
   justify-content: space-around;
   overflow: hidden;
-  perspective: 90vw;
+  perspective: 60vw;
   transform-style: preserve-3d;
+  z-index: 5000;
   .pad {
     --base-inRow: 3;
     --s: calc(var(--w) / 100 * 25 / (var(--pads-amount) / var(--base-inRow)));
+    --rand: 1;
     backface-visibility: visible;
     color: var(--rgb);
     text-shadow: 0px 0px 1px #2c2c2c;
@@ -77,15 +128,17 @@ body {
     border: var(--answer-color) 3px solid;
     border-radius: 8px;
     background-color: #eee;
-    transition: box-shadow 1s 0s, transform .5s 0s linear, animation 1s 0s linear, color 2s 0s linear;
+    transition: box-shadow 2s 0s, transform calc(.5s * var(--rand)) 0s linear, animation 1s 0s linear, color 2s 0s linear;
     &:hover,
     &:focus:not(disabled) {
-      animation: inspect 5s 0s infinite linear, inherit;
+      animation: inspect 5s 0s infinite linear;
+      transform: translateY(-5%);
       transition: box-shadow 2s 0s, transform .5s 0s, color 2s 0s linear;
-      box-shadow: 0px 0px 5px 1px var(--rgb);
+      box-shadow: 0px 0px 7px 1px var(--rgb);
       outline: none;
     }
     &:disabled {
+      opacity: 0;
       background-color: #2c2c2c;
       animation: throwAway .7s 0s ease-out;
       transform: translateY(-100vh) rotateX(180deg);
@@ -95,21 +148,41 @@ body {
     }
   }
 }
-.uwagi{
+
+.uwagi {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 99999999;
-  color: rgba(21,21,21,0.6);
+  color: rgba(21, 21, 21, 0.6);
   font-size: 2vh;
 }
 
-@keyframes throwAway {
+#defaultCanvas0 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -0;
+}
+
+
+/*@keyframes throwAway {
   from {
     transform: translateY(0) rotateX(0)
   }
   to {
     transform: translateY(-100vh) rotateX(180deg)
+  }
+}*/
+
+@keyframes throwAway {
+  from {
+    opacity: 1;
+    transform: translateZ(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateZ(-20px);
   }
 }
 

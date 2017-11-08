@@ -4,24 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>🤗</title>
+  <link rel="icon" href="./icon.ico">
   <link rel="stylesheet" href="main.min.css">
 </head>
 <body>
-  <section class="menu" style="display:none">
-    <span class="welcome">ABC</span>
-    <button class="start" type="button"></button>
+  <section class="wrapper">
+    <section class="menu" style="display:none;">
+      <span class="welcome">ABC</span>
+      <button class="start" type="button">Start</button>
+    </section>
+  
+    <section class="game">
+      <button class="pad">A</button>
+      <button class="pad">D</button>
+      <button class="pad">F</button>
+    </section>
+    <button class="read" type="button">Powtórz</button>
   </section>
-
-  <section class="game">
-    <button class="pad">A</button>
-    <button class="pad">D</button>
-    <button class="pad">F</button>
-  </section>
-  <span class="uwagi">
-    Pracuję nad poziomami(więcej w index.ts na <a href="https://github.com/LastShadowPL/abc" target="_blank">Repo</a>), wszelkie uwagi na lekcji / e-mailu szkolnym
-  </span>
-
+  <script src="./p5.min.js"></script>
+  <script src="./Math.js"></script>
+  <script src="./sketch.js"></script>
   <script src="./index.js"></script>
 </body>
 </html>

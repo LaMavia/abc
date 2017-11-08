@@ -1,63 +1,78 @@
 console.log('https://www.youtube.com/watch?v=Cvt98tMVbHk');
-var factorial = function (n) {
+const factorial = (n) => {
     if (n === 0)
         return 1;
     else
         return n * factorial(n - 1);
 };
-var rand = function (max, min) {
-    if (min === void 0) { min = 0; }
+const rand = (max, min = 0) => {
     return Math.floor(Math.random() * (max - min) + min);
 };
-var rgb = function () {
-    var color = "rgb(" + rand(255, 50) + "," + rand(255, 50) + "," + rand(255, 50) + ")";
+const rgb = () => {
+    const color = `rgb(${rand(255, 50)},${rand(255, 50)},${rand(255, 50)})`;
     document.body.style.setProperty('--rgb', color);
 };
 rgb();
 setInterval(rgb, 2000);
-var defColor = '#ffffff', wrColor = '#ff0000', corColor = '#00ff50';
-var letters = 'a ą b c ć d e ę f g h i j k l ł m n ń o ó p r s ś t u w y z ź ż'.split(" ");
-var rLetter = 'c';
-var randLetters = [];
-var handleClick = function (e) {
+const startBtn = document.querySelector('button.start');
+startBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    reset();
+    document.querySelector('section.menu').setAttribute('style', 'display:none');
+});
+const defColor = '#ffffff', wrColor = '#ff0000', corColor = '#00ff50';
+let letters = 'a ą b c ć d e ę f g h i j k l ł m n ń o ó p r s ś t u w y z ź ż'.split(" ");
+let rLetter = 'c';
+let randLetters = [];
+const handleClick = function (e) {
     this;
     if (this.innerHTML === rLetter)
         console.log('proper'), reset(), points++;
     else
         this.disabled = true;
 };
-var points = 0;
-var lvl = points + 2 * 1;
-var updateLvl = function (toAdd) {
-    if (toAdd === void 0) { toAdd = 0; }
-    lvl = points + 2 + toAdd;
+let points = 0;
+let lvl = points + 2 * 1;
+const updateLvl = (toAdd = 0) => {
+    let p = points <= 0 ? 2 : points;
+    lvl = p + toAdd;
 };
-var pads = document.querySelectorAll('.pad');
-pads.forEach(function (pad) { return pad.addEventListener('click', handleClick); });
-var initPad = function (amount) {
-    var outPoint = document.querySelector('.game');
-    for (var i = 0; i < amount; i++) {
-        var newPad = document.createElement('button');
+let pads = document.querySelectorAll('.pad');
+let playBtn = document.querySelector('.read');
+playBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    read();
+});
+pads.forEach(pad => pad.addEventListener('click', handleClick));
+const initPad = (amount) => {
+    let outPoint = document.querySelector('.game');
+    for (let i = 0; i < amount; i++) {
+        let newPad = document.createElement('button');
         newPad.classList.add('pad');
         outPoint.appendChild(newPad);
         newPad.addEventListener('click', handleClick);
-        pads.forEach(function (p) {
+        pads.forEach(p => {
             p.removeEventListener('click', handleClick);
         });
         pads = document.querySelectorAll('.pad');
-        pads.forEach(function (p) {
+        pads.forEach(p => {
             p.addEventListener('click', handleClick);
         });
     }
     console.log(pads.length);
 };
-var reset = function () {
+const read = () => {
+    const speech = new SpeechSynthesisUtterance(rLetter);
+    window.speechSynthesis.speak(speech);
+};
+const reset = () => {
     updateLvl();
     if (!(lvl % 6))
         initPad(1);
-    document.body.style.setProperty('--pads-amount', pads.length);
-    var isInArr = function (item, arr) {
-        var found = false, i = 0;
+    if (!(pads.length % 6))
+        document.body.style.setProperty('--pads-amount', pads.length);
+    const isInArr = (item, arr) => {
+        let found = false, i = 0;
         while (!found && i < arr.length) {
             found = arr[i] === item ? true : false;
             i++;
@@ -66,16 +81,16 @@ var reset = function () {
     };
     randLetters = [];
     while (randLetters.length < pads.length) {
-        var r = rand(letters.length);
+        let r = rand(letters.length);
         if (!isInArr(letters[r], randLetters))
             randLetters.push(letters[r]);
     }
-    pads.forEach(function (p, i) {
+    pads.forEach((p, i) => {
         p.innerHTML = randLetters[i];
         p.disabled = false;
+        p.style.setProperty('--rand', Math.random() + 0.8);
     });
     rLetter = randLetters[rand(pads.length)];
-    var speech = new SpeechSynthesisUtterance(rLetter);
-    window.speechSynthesis.speak(speech);
+    read();
 };
 reset();
